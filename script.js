@@ -42,9 +42,9 @@ document.getElementById("btnE").addEventListener("click", function game(){window
 
 const buttons = document.querySelectorAll(".btn");
 var numbers = 0
-buttons.forEach((button, index) => 
+/*buttons.forEach((button, index) => 
   button.addEventListener("click", () => loadAudio(index))
-);
+);*/
 buttons.forEach((button, index) => 
   button.addEventListener("click", () => numbers = index)
 );
@@ -161,12 +161,18 @@ function loadAudio(i) {                                  /*添加音乐函数*/
   const file = files[i];
 
   const loader = new THREE.AudioLoader();
-    loader.load(file, function (buffer) {
+    /*loader.load(file, function (buffer) {
       audio.setBuffer(buffer);
       audio.play();
       analyser = new THREE.AudioAnalyser(audio, fftSize);
       init();
-    });                                                   /*这可能是我们要找的主函数！ */
+    });      */   
+
+    init();                                          /*这可能是我们要找的主函数！ */
+    var music=document.createElement("audio");
+    music.src=i;
+    music.autoplay="autoplay";
+    preload="auto";
 
   
 
