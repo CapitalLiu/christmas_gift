@@ -30,30 +30,49 @@ const params = {
 let composer;
 
 const fftSize = 2048;
-const totalPoints = 4000;
+const totalPoints = 4000;/**4000 */
 
 const listener = new THREE.AudioListener();
+const TextureLoader = new THREE.TextureLoader();
 
 const audio = new THREE.Audio(listener);
 
-document.querySelector("input").addEventListener("change", uploadAudio, false);
+/*document.querySelector("input").addEventListener("change", uploadAudio, false);*/
+document.getElementById("btnE").addEventListener("click", function game(){window.location.href="https://ephemeral-marigold-ea6f07.netlify.app/"})
 
 const buttons = document.querySelectorAll(".btn");
-buttons.forEach((button, index) =>
+var numbers = 0
+buttons.forEach((button, index) => 
   button.addEventListener("click", () => loadAudio(index))
 );
+buttons.forEach((button, index) => 
+  button.addEventListener("click", () => numbers = index)
+);
 
-function init() {
+function init() {     /**这就是我们的主函数！！ */
   const overlay = document.getElementById("overlay");
   overlay.remove(); /*清除屏幕 */
 
   scene = new THREE.Scene();
-  renderer = new THREE.WebGLRenderer({ antialias: true });
+  scene.background = new THREE.Color('#020003')
+  renderer = new THREE.WebGLRenderer({ antialias: true });/**渲染器 */
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
-
-  camera = new THREE.PerspectiveCamera(
+ /**var words=document.createElement("p");
+  words.id="message";
+  words.innerText="Dear my Yolanda";
+  document.body.appendChild(words);
+  var newgame=document.createElement("script");
+  newgame.type="module"
+  newgame.src="./star_script.js";
+  var newgame_1=document.createElement("script");
+  newgame_1.src="https://cdnjs.cloudflare.com/ajax/libs/three.js/101/three.min.js";
+  document.body.appendChild(newgame_1);
+  var newgame_2=document.createElement("script");
+  newgame_2.src='https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.5/dat.gui.min.js';
+  document.body.appendChild(newgame_2);*/
+  camera = new THREE.PerspectiveCamera(       /**摄像机视角 */
     60,
     window.innerWidth / window.innerHeight,
     1,
@@ -72,7 +91,8 @@ function init() {
 
   addPlane(scene, uniforms, 3000);
   addSnow(scene, uniforms);
-
+  addText1();
+  addText2();
   range(10).map((i) => {
     addTree(scene, uniforms, totalPoints, [20, 0, -20 * i]);
     addTree(scene, uniforms, totalPoints, [-20, 0, -20 * i]);
@@ -95,16 +115,33 @@ function init() {
   composer.addPass(bloomPass);
 
   addListners(camera, renderer, composer);
+  
   animate();
 }
+var clock = new THREE.Clock();
+var totaltime;
+var M=0;
 
-function animate(time) {
+function animate(time) {  /**循环中不断调用render */
+  
   analyser.getFrequencyData();
   uniforms.tAudioData.value.needsUpdate = true;
   step = (step + 1) % 1000;
+  var T = clock.getDelta();
+
+  totaltime = clock.getElapsedTime()
+
   uniforms.time.value = time;
   uniforms.step.value = step;
   composer.render();
+  // 创建渲染函数
+  console.log('两帧渲染时间间隔',T*1000+'毫秒');
+  console.log('查看每秒渲染频率',1/T);
+  console.log('时钟运行的总时长为',totaltime);
+  console.log(M)
+  
+
+	
   requestAnimationFrame(animate);
 }
 
@@ -113,10 +150,12 @@ function loadAudio(i) {                                  /*添加音乐函数*/
     '<div class="text-loading">Please Wait...</div>';
   const files = [
     /*"https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Simon_Panrucker/Happy_Christmas_You_Guys/Simon_Panrucker_-_01_-_Snowflakes_Falling_Down.mp3",*/
-    "https://dl.stream.qqmusic.qq.com/C400002RnB7D12m7fU.m4a?guid=9250395404&vkey=8842C6F59F14997AF443A23483F4558B60CDB93898C15E3D6A14D804DEC059BF5BA4FD82580F8463A8317C453722AD1DA39A247E2537519E&uin=2250594632&fromtag=120032",
-    "https://dl.stream.qqmusic.qq.com/C4000037mouJ1noMZK.m4a?guid=1636750524&vkey=50B8B41FDC80C8F7CC0E0B9CE1874A4F238FF18CB849D7BF719574F3A009CFBA274B84E52FBE79885AEA90568838A4031E44A7946C2C1D9F&uin=2250594632&fromtag=120032",
-    "https://win-web-nf01-sycdn.kuwo.cn/8b34436d0ea6a08b3bcf71b1f0ddecb9/63a3eb3c/resource/n1/55/61/661905883.mp3",
-    "https://dl.stream.qqmusic.qq.com/RS02061DI0jt0qLt04.mp3?guid=1566316428&vkey=906A2A64D4F863A87BA5B8937E0A2BB6132801413567D049E9A101EA2A4EBB447C1A8BFE1D51D5F5D4B5D0F5A0F174BB408E942590C6EB7E&uin=2250594632&fromtag=120052",
+    "https://m801.music.126.net/20221225145937/08d99086c0b84df1bd30111628dc7c17/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/22259860097/d8b8/99b3/0d4d/26166b14b5682cf74264120364440111.mp3",
+    "https://m801.music.126.net/20221224200059/4f842d54cf2b6dea4a07849da015546d/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/22216964210/3455/c2a2/abd0/ccbe67c6d3ffbc506bed74334093ce44.mp3",
+    "https://m701.music.126.net/20221224193124/4683d2d9d368c2ebbbaf1a716f66ef9c/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/14096492045/99dc/ae67/db65/9c46f1c5507fdd8a3ff1dbad0042cf9b.mp3",
+    "https://m701.music.126.net/20221224195323/b70427e318cd893c2520956c234f25ab/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/14096600726/c9b6/fe3a/c474/11ecaf459423dad398d2a1d3813ecd3a.mp3",
+    "https://m801.music.126.net/20221224195650/f2bbc6fe0facda0050a253f2a259e526/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/12616691833/403f/1166/cf26/5f9c4010f95d8ccec160d6e5ffbb2288.mp3",
+    
   
   ];
   const file = files[i];
@@ -155,7 +194,7 @@ function uploadAudio(event) {
   reader.readAsArrayBuffer(files[0]);
 }
 
-function addTree(scene, uniforms, totalPoints, treePosition) {
+function addTree(scene, uniforms, totalPoints, treePosition) { /**树 */
   const vertexShader = `
   attribute float mIndex;
   varying vec3 vColor;
@@ -199,7 +238,8 @@ function addTree(scene, uniforms, totalPoints, treePosition) {
     uniforms: {
       ...uniforms,
       pointTexture: {
-        value: new THREE.TextureLoader().load(`https://assets.codepen.io/3685267/spark1.png`),
+        /*value: new THREE.TextureLoader().load(`https://assets.codepen.io/3685267/spark1.png`),*/
+        value: new THREE.TextureLoader().load('./spark3.jpg'),
       },
     },
     vertexShader,
@@ -230,8 +270,9 @@ function addTree(scene, uniforms, totalPoints, treePosition) {
     positions.push(y + rand(-0.3 * modifier, 0.3 * modifier));
     positions.push(z + rand(-0.3 * modifier, 0.3 * modifier));
 
-    color.setHSL(map(i, 0, totalPoints, 1.0, 0.0), 1.0, 0.5);
-
+    /*color.setHSL(map(i, 0, 800, 1.0, 0.1), 1.0, 0.2);*/
+    /*color.set(randChoise(["#541407", "#05186b", "#5e430c", "#033804"]));*/
+    color.set(randChoise([ "#9e2509","#2e5c09","#947f16", "#874e08"]));
     colors.push(color.r, color.g, color.b);
     phases.push(rand(1000));
     sizes.push(1);
@@ -245,7 +286,7 @@ function addTree(scene, uniforms, totalPoints, treePosition) {
       THREE.DynamicDrawUsage
     )
   );
-  geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+  geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));/**2 */
   geometry.setAttribute("size", new THREE.Float32BufferAttribute(sizes, 1));
   geometry.setAttribute("phase", new THREE.Float32BufferAttribute(phases, 1));
   geometry.setAttribute("mIndex", new THREE.Float32BufferAttribute(mIndexs, 1));
@@ -349,12 +390,15 @@ function addSnow(scene, uniforms) {
       positions.push(y);
       positions.push(z);
 
-      color.set(randChoise(["#f1d4d4", "#f1f6f9", "#eeeeee", "#f1f1e8"]));
+      /*color.set(randChoise(["#f1d4d4", "#f1f6f9", "#eeeeee", "#f1f1e8"]));*/
+      
+      color.set(randChoise(["#f7f6f2", "#f5efda", "#e6da91", "#f0cd51"]));
+
 
       colors.push(color.r, color.g, color.b);
       phases.push(rand(1000));
       phaseSecondaries.push(rand(1000));
-      sizes.push(rand(4, 2));
+      sizes.push(rand(6, 2.5));
     }
 
     geometry.setAttribute(
@@ -377,7 +421,6 @@ function addSnow(scene, uniforms) {
     "https://assets.codepen.io/3685267/snowflake1.png",
     "https://assets.codepen.io/3685267/snowflake2.png",
     "https://assets.codepen.io/3685267/snowflake3.png",
-    "https://assets.codepen.io/3685267/snowflake4.png",
     "https://assets.codepen.io/3685267/snowflake5.png",
   ];
   sprites.forEach((sprite) => {
@@ -462,6 +505,66 @@ function addPlane(scene, uniforms, totalPoints) {
   scene.add(plane);
 }
 
+function addText1(){
+  var loader = new THREE.FontLoader();
+
+  loader.load( './Note Script SemiBold_Regular.json', function ( font ) {
+
+    var textGeometry = new THREE.TextGeometry( 'Merry Christmas!', {
+      font: font,
+      size: 2,
+      height: 0.3,
+      curveSegments: 6,
+      bevelEnabled: true,
+      bevelThickness: 0.03,
+      bevelSize: 0,
+      bevelSegments: 5
+    } );
+    textGeometry.computeBoundingBox();
+    textGeometry.translate(
+      - textGeometry.boundingBox.max.x * 0.5,
+      + textGeometry.boundingBox.max.y * 2.5,
+      - textGeometry.boundingBox.max.z * 0.5,
+    )
+    const matcapTexture = TextureLoader.load('./dark_golden.png')
+    const textMaterial = new THREE.MeshMatcapMaterial({ matcap:matcapTexture })
+    const text = new THREE.Mesh(textGeometry,textMaterial);
+    scene.add(text);
+  } );
+}
+
+function addText2(){
+  var loader = new THREE.FontLoader();
+  const texts=["ALL  I  Want  For  Christmas  Is  You!","The  only  thing  in  my  Christmas  List  is  U!","我想和你一起看最长的电影","那个表白的傍晚 是我一生中最勇敢的瞬间","夏夜里的晚风 只有和你和我相拥"]
+  
+//clock.getDelta()方法获得两帧的时间间隔，返回时间单位：秒
+  
+      loader.load( './NanFengXingShu_Regular.json', function ( font ) {
+        var textGeometry = new THREE.TextGeometry( texts[numbers], {
+          font: font,
+          size: 1.5,
+          height: 0.1,
+          curveSegments: 6,
+          bevelEnabled: true,
+          bevelThickness: 0.03,
+          bevelSize: 0,
+          bevelSegments: 5
+        } );
+        textGeometry.computeBoundingBox();
+        textGeometry.translate(
+          - textGeometry.boundingBox.max.x * 0.5,
+          - textGeometry.boundingBox.max.y * 5,
+          - textGeometry.boundingBox.max.z * 0.5,
+        )
+        const matcapTexture = TextureLoader.load('./millk.png')
+        const textMaterial = new THREE.MeshMatcapMaterial({ matcap:matcapTexture })
+        const text = new THREE.Mesh(textGeometry,textMaterial);
+        scene.add(text);
+      })
+    ;
+}
+
+
 function addListners(camera, renderer, composer) {
   document.addEventListener("keydown", (e) => {
     const { x, y, z } = camera.position;
@@ -485,3 +588,4 @@ function addListners(camera, renderer, composer) {
     false
   );
 }
+

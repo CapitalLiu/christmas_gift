@@ -9,21 +9,26 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #161616;
-  color: #c5a880;
+  /*background: #161616;
+  color: #c5a880;*/
+  background-image:url(./背景0.jpg);
+  background-size: cover;
+  color:forestgreen ;
   font-family: sans-serif;
 }
 
 label {
   display: inline-block;
-  background-color: #161616;
+  /*background-color: #161616;*/
+  background-color:firebrick;
   padding: 16px;
   border-radius: 0.3rem;
   cursor: pointer;
   margin-top: 1rem;
   width: 300px;
   border-radius: 10px;
-  border: 1px solid #c5a880;
+  /*border: 1px solid #c5a880;*/
+  border: 1px solid forestgreen;
   text-align: center;
 }
 
@@ -33,11 +38,21 @@ ul {
   margin: 0;
 }
 
+#btnE{
+  color:darkgoldenrod;
+  font-size: 25px;
+  border: 2px solid #916425;
+
+}
+
 .btn {
-  background-color: #161616;
+  background-color:rgb(107, 14, 14);
   border-radius: 10px;
-  color: #c5a880;
-  border: 1px solid #c5a880;
+  color:rgb(24, 132, 24);
+  font-family: "Microsoft YaHei";
+  font-size: 18px;
+  font-weight: 600;
+  border: 2px solid #916425;
   padding: 16px;
   width: 300px;
   margin-bottom: 16px;
@@ -47,15 +62,19 @@ ul {
 .separator {
   font-weight: bold;
   text-align: center;
+  font-size: 30px;
   width: 300px;
   margin: 16px 0px;
-  color: #a07676;
+  color:rgb(138, 15, 40);
 }
-
+.play{
+  position:relative;
+  bottom: 30px;
+}
 .title {
-  color: #a07676;
+  color:#c5a880;
   font-weight: bold;
-  font-size: 1.25rem;
+  font-size: 30px;
   margin-bottom: 16px;
 }
 
