@@ -42,9 +42,9 @@ document.getElementById("btnE").addEventListener("click", function game(){window
 
 const buttons = document.querySelectorAll(".btn");
 var numbers = 0
-/*buttons.forEach((button, index) => 
+buttons.forEach((button, index) => 
   button.addEventListener("click", () => loadAudio(index))
-);*/
+);
 buttons.forEach((button, index) => 
   button.addEventListener("click", () => numbers = index)
 );
@@ -150,31 +150,29 @@ function loadAudio(i) {                                  /*添加音乐函数*/
     '<div class="text-loading">Please Wait...</div>';
   const files = [
     /*"https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Simon_Panrucker/Happy_Christmas_You_Guys/Simon_Panrucker_-_01_-_Snowflakes_Falling_Down.mp3",*/
-    "https://m801.music.126.net/20221225145937/08d99086c0b84df1bd30111628dc7c17/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/22259860097/d8b8/99b3/0d4d/26166b14b5682cf74264120364440111.mp3",
-    "https://m801.music.126.net/20221224200059/4f842d54cf2b6dea4a07849da015546d/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/22216964210/3455/c2a2/abd0/ccbe67c6d3ffbc506bed74334093ce44.mp3",
-    "https://m701.music.126.net/20221224193124/4683d2d9d368c2ebbbaf1a716f66ef9c/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/14096492045/99dc/ae67/db65/9c46f1c5507fdd8a3ff1dbad0042cf9b.mp3",
-    "https://m701.music.126.net/20221224195323/b70427e318cd893c2520956c234f25ab/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/14096600726/c9b6/fe3a/c474/11ecaf459423dad398d2a1d3813ecd3a.mp3",
-    "https://music.163.com/song/media/outer/url?id=1911206410",
+    /*"https://m801.music.126.net/20221225145937/08d99086c0b84df1bd30111628dc7c17/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/22259860097/d8b8/99b3/0d4d/26166b14b5682cf74264120364440111.mp3",*/
+    /*"https://m801.music.126.net/20221224200059/4f842d54cf2b6dea4a07849da015546d/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/22216964210/3455/c2a2/abd0/ccbe67c6d3ffbc506bed74334093ce44.mp3",*/
+    "./Mariah Carey - All I Want For Christmas Is You.mp3",
+    "./Anson Seabra - Christmas List.mp3",
+    "./余佳运 - 和你.mp3",
+    /*"https://m701.music.126.net/20221224193124/4683d2d9d368c2ebbbaf1a716f66ef9c/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/14096492045/99dc/ae67/db65/9c46f1c5507fdd8a3ff1dbad0042cf9b.mp3",*/
+    "./棱镜 - 这是我一生中最勇敢的瞬间.mp3",
+    /*"https://m701.music.126.net/20221224195323/b70427e318cd893c2520956c234f25ab/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/14096600726/c9b6/fe3a/c474/11ecaf459423dad398d2a1d3813ecd3a.mp3",*/
+    "./盘尼西林 - 夏夜晚风.mp3"
+    /*"https://m801.music.126.net/20221224195650/f2bbc6fe0facda0050a253f2a259e526/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/12616691833/403f/1166/cf26/5f9c4010f95d8ccec160d6e5ffbb2288.mp3",*/
     
   
   ];
   const file = files[i];
 
   const loader = new THREE.AudioLoader();
-    /*loader.load(file, function (buffer) {
+      loader.load(file, function (buffer) {
       audio.setBuffer(buffer);
       audio.play();
       analyser = new THREE.AudioAnalyser(audio, fftSize);
       init();
-    });      */   
-
-    init();                                          /*这可能是我们要找的主函数！ */
-    var music=document.createElement("audio");
-    music.src=i;
-    music.autoplay="autoplay";
-    preload="auto";
-
-  
+    });                                               /*这可能是我们要找的主函数！ */
+                                  
 
   
 }
